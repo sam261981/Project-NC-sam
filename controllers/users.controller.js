@@ -1,10 +1,9 @@
+const { checkUsers } = require('../models/users.models')
 
-
-
-
-exports.fetchUsers = (req, res, next) => {
-    getUsers().then((user) => {
-        res.status(200).send({user})
+exports.getUsers = (req, res, next) => {
+  checkUsers()
+    .then((users) => {
+      res.status(200).send({ users })
     })
-.catch((err) => next(err))
+    .catch((err) => next(err))
 }
