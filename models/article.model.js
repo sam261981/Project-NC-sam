@@ -1,3 +1,4 @@
+const res = require('express/lib/response')
 const db = require('../db/connection')
 
 
@@ -9,3 +10,11 @@ exports.selectArticleById = async (articleId) => {
     return articleData.rows
     }
     
+    exports.incrementArticleById = async (articleId, vote) => {
+     const voteInc = vote.votes;
+     if (voteInc === 0){
+         Promise.reject({status: 404, msg: 'No Increase Specified'})
+         }
+         const increaseArticle = await db.query('UPDATE articles SET votes = votes + $1 WHERE article_id = $2 RETURNING *;', [voteInc, articleId])
+         return increaseArticle.rows[0]
+    }
