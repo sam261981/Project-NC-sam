@@ -127,3 +127,23 @@ describe('PATCH/api/articles/:article_id', () => {
       })
   })
 })
+describe('/api/:article_id/comments', () => {
+  test('responds with status 200 and comments of the article id', () => {
+    return request(app)
+      .get('/api/articles/3/comments')
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toBeInstanceOf(Array)
+        expect(res.body).toHaveLength(2)
+      })
+  })
+
+  test('responds with 404 if no comment found', () => {
+    return request(app)
+      .get('/api/articles/60/comments')
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe('comments not found')
+      })
+  })
+})

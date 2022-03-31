@@ -2,19 +2,18 @@ const express = require('express')
 const app = express()
 const { getTopic } = require('./controllers/topics.controller')
 const { fetchUsers } = require('./controllers/users.controller')
+const { getCommentsByArticleId } = require('./controllers/comments.controller')
 const {
   getArticleById,
   patchArticle,
 } = require('./controllers/article.controller')
-
-app.get('/api/topics', getTopic)
-app.get('/api/users', fetchUsers)
-
 app.use(express.json())
 
 app.get('/api/topics', getTopic)
-
+app.get('/api/users', fetchUsers)
+app.get('/api/topics', getTopic)
 app.get('/api/articles/:article_id', getArticleById)
+app.get('/api/articles/:article_id/comments', getCommentsByArticleId)
 
 app.patch('/api/articles/:article_id', patchArticle)
 
