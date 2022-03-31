@@ -1,12 +1,10 @@
 const { selectCommentsByArticleId } = require('../models/comments.model')
 
-exports.getCommentArticleBeId = (req, res, next) => {
-  const artId = req.params.article_id
-  selectCommentsByArticleId(artId)
+exports.getCommentsByArticleId = (req, res, next) => {
+  const { article_id } = req.params
+  selectCommentsByArticleId(article_id)
     .then((comments) => {
-      if (comments.length > 0) {
-        res.status(200).send(comments)
-      }
+      res.status(200).send(comments)
     })
     .catch((err) => next(err))
 }

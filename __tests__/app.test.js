@@ -3,7 +3,6 @@ const app = require('../app')
 const seed = require('../db/seeds/seed')
 const data = require('../db/data/test-data')
 const db = require('../db/connection')
-const { patch } = require('../app')
 
 beforeEach(() => seed(data))
 afterAll(() => db.end())
@@ -46,7 +45,6 @@ describe('/api/articles/:article_id', () => {
               votes: expect.any(Number),
             }),
           )
-          //   console.log(article,'<=======')
         })
       })
   })
@@ -167,47 +165,47 @@ describe('PATCH/api/articles/:article_id', () => {
         expect(res.body.article).toEqual(dataOutput)
       })
   })
-})
-test('increase article 4 vote by 10 and responds with an updated article', () => {
-  const increaseVote = { votes: 10 }
-  const dataOutput = {
-    article_id: 4,
-    title: 'Student SUES Mitch!',
-    topic: 'mitch',
-    author: 'rogersop',
-    body:
-      'We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages',
-    created_at: '2020-05-06T01:14:00.000Z',
-    votes: 10,
-  }
-  return request(app)
-    .patch('/api/articles/4')
-    .send(increaseVote)
-    .expect(201)
-    .then((res) => {
-      expect(res.body.article).toEqual(dataOutput)
-    })
-})
-test('Deincrease article 1 by 10 and respond with updated article ', () => {
-  deincreaseVote = { votes: -10 }
-  const dataOutput = {
-    article_id: 1,
-    title: 'Living in the shadow of a great man',
-    topic: 'mitch',
-    author: 'butter_bridge',
-    body: 'I find this existence challenging',
-    created_at: '2020-07-09T20:11:00.000Z',
-    votes: 90,
-  }
-  return request(app)
-    .patch('/api/articles/1')
-    .send(deincreaseVote)
-    .expect(201)
-    .then((res) => {
-      expect(res.body.article).toEqual(dataOutput)
-    })
-})
 
+  test('increase article 4 vote by 10 and responds with an updated article', () => {
+    const increaseVote = { votes: 10 }
+    const dataOutput = {
+      article_id: 4,
+      title: 'Student SUES Mitch!',
+      topic: 'mitch',
+      author: 'rogersop',
+      body:
+        'We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages',
+      created_at: '2020-05-06T01:14:00.000Z',
+      votes: 10,
+    }
+    return request(app)
+      .patch('/api/articles/4')
+      .send(increaseVote)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.article).toEqual(dataOutput)
+      })
+  })
+  test('Deincrease article 1 by 10 and respond with updated article ', () => {
+    deincreaseVote = { votes: -10 }
+    const dataOutput = {
+      article_id: 1,
+      title: 'Living in the shadow of a great man',
+      topic: 'mitch',
+      author: 'butter_bridge',
+      body: 'I find this existence challenging',
+      created_at: '2020-07-09T20:11:00.000Z',
+      votes: 90,
+    }
+    return request(app)
+      .patch('/api/articles/1')
+      .send(deincreaseVote)
+      .expect(201)
+      .then((res) => {
+        expect(res.body.article).toEqual(dataOutput)
+      })
+  })
+})
 describe('Get users table', () => {
   test('responds with an array of objects for all users in the table', () => {
     return request(app)
@@ -232,6 +230,27 @@ describe('Get users table', () => {
       .expect(404)
       .then(({ body: { msg } }) => {
         expect(msg).toBe('Route not found')
+      })
+  })
+})
+
+describe('/api/:article_id/comments', () => {
+  test('responds with status 200 and comments of the article id', () => {
+    return request(app)
+      .get('/api/articles/3/comments')
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toBeInstanceOf(Array)
+        expect(res.body).toHaveLength(2)
+      })
+  })
+
+  test('responds with 404 if no comment found', () => {
+    return request(app)
+      .get('/api/articles/60/comments')
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe('comments not found')
       })
   })
 })
