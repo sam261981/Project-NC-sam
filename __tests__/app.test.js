@@ -134,7 +134,7 @@ describe('Get users table', () => {
       .get('/api/users')
       .expect(200)
       .then((res) => {
-        expect(res.body.users).toHaveLength(1)
+        expect(res.body.users).toHaveLength(4)
         res.body.users.forEach((user) => {
           expect(user).toEqual(
             expect.objectContaining({
@@ -151,7 +151,7 @@ describe('Get users table', () => {
       .get('/api/no-valid-path')
       .expect(404)
       .then(({ body: { msg } }) => {
-        expect(msg).toBe('opps, path not found')
+        expect(msg).toBe('Route not found')
       })
   })
 })
