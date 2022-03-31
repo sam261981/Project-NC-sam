@@ -17,7 +17,7 @@ exports.patchArticle = (req, res, next) => {
   const vote = req.body
   incrementArticleById(articleId, vote)
     .then((article) => {
-      res.status(201).send({ article })
+      res.status(201).send({ article: article })
     })
     .catch((err) => next(err))
 }
