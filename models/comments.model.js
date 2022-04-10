@@ -10,3 +10,14 @@ exports.selectCommentsByArticleId = async (article_id) => {
   }
   return commentsArr.rows
 }
+
+exports.postCommentsById = async (article_id, username, body) => {
+  if (!username || !body) {
+    return Promise.reject({ status: 400, msg: 'bad request' })
+  }
+  const commentPostArr = await db.query(
+    `INSERT INTO comments (article_id, author, body) VALUES ($1, $2, $3) RETURNING *;`,
+    [article_id, username, body],
+  )
+  return commentPostArr.rows[0]
+}
