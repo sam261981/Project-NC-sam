@@ -21,3 +21,10 @@ exports.postCommentsById = async (article_id, username, body) => {
   )
   return commentPostArr.rows[0]
 }
+exports.deleteCommentById = async (comment_id) => {
+  const deletedComment = await db.query(
+    ` DELETE FROM comments WHERE comment_id = $1 RETURNING *;`,
+    [comment_id],
+  )
+  return deletedComment.rows[0]
+}

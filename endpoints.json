@@ -23,5 +23,17 @@
         }
       ]
     }
+  },
+  "GET /api/articles/:articleId": {
+    "description": "serves an article object when provided a valid article ID"
+  },
+  "GET /api/articles/:articleId/comments": {
+    "description": "serves a comments object relating to an article when provided a valid article ID"
+  },
+  "POST /api/articles/:articleId/comments": {
+    "description": "posts a comments object relating to an article when provided a valid body and article ID"
+  },
+  "DELETE /api/articles/:articleId/comments": {
+    "description": "deletes a comments object relating to an article when provided a valid comment ID"
   }
 }

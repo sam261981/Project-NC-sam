@@ -1,3 +1,4 @@
+const apiJson = require('../endpoints.json')
 const {
   selectArticleById,
   incrementArticleById,
@@ -37,4 +38,7 @@ exports.getArticles = (req, res, next) => {
       }
     })
     .catch((err) => next(err))
+}
+exports.getApi = (req, res, next) => {
+  return res.status(200).send(apiJson)
 }

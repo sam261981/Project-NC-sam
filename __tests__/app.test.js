@@ -3,7 +3,7 @@ const app = require('../app')
 const seed = require('../db/seeds/seed')
 const data = require('../db/data/test-data')
 const db = require('../db/connection')
-
+const apiJson = require('../endpoints.json')
 beforeEach(() => seed(data))
 afterAll(() => db.end())
 
@@ -247,6 +247,33 @@ describe('POST /api/articles/:article_id/comments', () => {
           article_id: 2,
           comment_id: 19,
         })
+      })
+  })
+})
+describe('DELETE /api/comments/:comment_id', () => {
+  test('Status 204, deletes comment from database', () => {
+    return request(app)
+      .delete('/api/comments/1')
+      .expect(201)
+      .then((res) => {
+        expect(res.body).toMatchObject({
+          body:
+            "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+          votes: 16,
+          author: 'butter_bridge',
+          article_id: 9,
+          comment_id: 1,
+        })
+      })
+  })
+})
+describe('get api ', () => {
+  test('responds with status 200 for api', () => {
+    return request(app)
+      .get('/api')
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual(apiJson)
       })
   })
 })
