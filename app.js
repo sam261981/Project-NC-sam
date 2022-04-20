@@ -1,6 +1,6 @@
 const express = require('express')
 const { getTopic } = require('./controllers/topics.controller')
-
+const cors = require('cors')
 const {
   getCommentsByArticleId,
   postComments,
@@ -14,6 +14,7 @@ const {
   getApi,
 } = require('./controllers/article.controller')
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 app.get('/api/users', getUsers)
