@@ -29,7 +29,6 @@ exports.getArticles = (req, res, next) => {
   return fetchArticleByQuery(sort_by, order, topic)
     .then((result) => {
       if (result.length === 0) {
-        console.log('hi')
         res
           .status(400)
           .send({ message: 'Article does not contain your searchterm' })
