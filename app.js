@@ -1,6 +1,6 @@
+const cors = require('cors')
 const express = require('express')
 const { getTopic } = require('./controllers/topics.controller')
-const cors = require('cors')
 const app = express()
 app.use(cors())
 
